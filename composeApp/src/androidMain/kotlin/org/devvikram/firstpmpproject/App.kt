@@ -5,9 +5,13 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -29,22 +33,49 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
-fun App() {
+fun App(
+    BatteryManager: BatteryManager,
+    networkInfo: NetworkInfo
+) {
     MaterialTheme {
         Surface(
             modifier = Modifier.fillMaxWidth(),
             color = MaterialTheme.colors.background
         ) {
-            var shouldShowOnboarding by remember { mutableStateOf(true) }
-            if (shouldShowOnboarding) {
-                OnBoardingScreen(
-                    onContinueClicked = {
-                        shouldShowOnboarding = false
+
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ){
+                Column (
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ){
+                    Text("The current Battery Level is : ${BatteryManager.getBatteryLevel()}")
+
+                    if(networkInfo.isNetworkAvailable()){
+                        Text("Network is Available")
+                    }else{
+                        Text("Network is not Available")
                     }
-                )
-            } else {
-                Greetings()
+                }
+
+
             }
+
+
+
+//            var shouldShowOnboarding by remember { mutableStateOf(true) }
+//            if (shouldShowOnboarding) {
+//                OnBoardingScreen(
+//                    onContinueClicked = {
+//                        shouldShowOnboarding = false
+//                    }
+//                )
+//            } else {
+//                Greetings()
+//            }
         }
     }
 }
