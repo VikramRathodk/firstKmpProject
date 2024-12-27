@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">firstKmpProject</string>
+
+        <string name="yoga_tree_pose">Tree Pose</string>
+        <string name="yoga_handstand">Handstand</string>
+        <string name="yoga_lotus_pose">Lotus Pose</string>
+        <string name="yoga_forward_bend">Forward Bend</string>
+
 </resources>

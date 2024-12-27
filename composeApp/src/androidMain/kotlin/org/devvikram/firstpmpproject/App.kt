@@ -3,23 +3,27 @@ package org.devvikram.firstpmpproject
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Button
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Surface
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import org.devvikram.firstpmpproject.presentation.HomeScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -38,45 +43,52 @@ fun App(
     networkInfo: NetworkInfo
 ) {
     MaterialTheme {
-        Surface(
+        Scaffold(
             modifier = Modifier.fillMaxWidth(),
-            color = MaterialTheme.colors.background
-        ) {
-
-
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ){
-                Column (
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ){
-                    Text("The current Battery Level is : ${BatteryManager.getBatteryLevel()}")
-
-                    if(networkInfo.isNetworkAvailable()){
-                        Text("Network is Available")
-                    }else{
-                        Text("Network is not Available")
-                    }
-                }
-
-
+            backgroundColor = MaterialTheme.colors.background,
+            bottomBar = {
+                MyBottomNavigation()
             }
-
-
-
-//            var shouldShowOnboarding by remember { mutableStateOf(true) }
-//            if (shouldShowOnboarding) {
-//                OnBoardingScreen(
-//                    onContinueClicked = {
-//                        shouldShowOnboarding = false
-//                    }
-//                )
-//            } else {
-//                Greetings()
-//            }
+        ) {
+            HomeScreen(modifier = Modifier.padding(it))
         }
+    }
+}
+
+@Composable
+fun NetworkAndBattery(
+    BatteryManager: BatteryManager,
+    networkInfo: NetworkInfo
+) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text("The current Battery Level is : ${BatteryManager.getBatteryLevel()}")
+
+            if (networkInfo.isNetworkAvailable()) {
+                Text("Network is Available")
+            } else {
+                Text("Network is not Available")
+            }
+        }
+
+    }
+
+
+    var shouldShowOnboarding by remember { mutableStateOf(true) }
+    if (shouldShowOnboarding) {
+        OnBoardingScreen(
+            onContinueClicked = {
+                shouldShowOnboarding = false
+            }
+        )
+    } else {
+        Greetings()
     }
 }
 
@@ -145,3 +157,33 @@ fun OnBoardingScreen(
     }
 }
 
+@Composable
+fun MyBottomNavigation() {
+    BottomNavigation (
+        modifier = Modifier.fillMaxWidth(),
+        backgroundColor = MaterialTheme.colors.surface,
+        contentColor = MaterialTheme.colors.onSurface,
+        elevation = 8.dp,
+    ){
+        val selectedTab = remember { mutableStateOf(0) }
+
+        BottomNavigationItem(
+            selected = selectedTab.value == 0,
+            onClick = { selectedTab.value = 0 },
+            icon = { Icon(Icons.Filled.Home, contentDescription = null) },
+            label = { Text("Home") }
+        )
+        BottomNavigationItem(
+            selected = selectedTab.value == 1,
+            onClick = { selectedTab.value = 1 },
+            icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
+            label = { Text("Favorites") }
+        )
+        BottomNavigationItem(
+            selected = selectedTab.value == 2,
+            onClick = { selectedTab.value = 2 },
+            icon = { Icon(Icons.Filled.Notifications, contentDescription = null) },
+            label = { Text("Notifications") }
+        )
+    }
+}
