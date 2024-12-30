@@ -33,7 +33,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import org.devvikram.firstpmpproject.presentation.HomeScreen
+import androidx.navigation.compose.rememberNavController
+import org.devvikram.firstpmpproject.navigations.AppNavigation
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -46,11 +47,11 @@ fun App(
         Scaffold(
             modifier = Modifier.fillMaxWidth(),
             backgroundColor = MaterialTheme.colors.background,
-            bottomBar = {
-                MyBottomNavigation()
-            }
         ) {
-            HomeScreen(modifier = Modifier.padding(it))
+            AppNavigation(
+                navController = rememberNavController(),
+                modifier = Modifier.padding(it)
+            )
         }
     }
 }
@@ -187,3 +188,4 @@ fun MyBottomNavigation() {
         )
     }
 }
+
