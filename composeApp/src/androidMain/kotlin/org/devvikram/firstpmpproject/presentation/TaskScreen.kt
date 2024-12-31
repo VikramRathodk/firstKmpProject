@@ -233,13 +233,23 @@ fun TaskCard(
                                     .fillMaxWidth()
                             )
                             Spacer(modifier = Modifier.size(10.dp))
-                            Switch(
-                                checked = editedCompletionState.value,
-                                onCheckedChange = {
-                                    editedCompletionState.value = it
-                                },
-                                modifier = Modifier.padding(vertical = 8.dp)
-                            )
+
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Switch(
+                                    checked = editedCompletionState.value,
+                                    onCheckedChange = {
+                                        editedCompletionState.value = it
+                                    },
+                                    modifier = Modifier.padding(end = 8.dp)
+                                )
+                                Text(
+                                    text = if (editedCompletionState.value) "Completed" else "Incomplete",
+                                    fontSize = 16.sp,
+                                    color = Color.Black
+                                )
+                            }
 
                             Button(
                                 onClick = {
