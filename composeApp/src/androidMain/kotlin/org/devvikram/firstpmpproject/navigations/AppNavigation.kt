@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import org.devvikram.firstpmpproject.Destination
+import org.devvikram.firstpmpproject.TaskViewModel
 import org.devvikram.firstpmpproject.presentation.HomeScreen
 import org.devvikram.firstpmpproject.presentation.TaskListScreen
 import org.devvikram.firstpmpproject.repository.TaskRepository
@@ -18,12 +19,13 @@ fun AppNavigation(navController: NavHostController,modifier: Modifier) {
         startDestination = Destination.Task,
         modifier = modifier
     ) {
-//        composable<Destination.Home>() {
-//            HomeScreen()
-//        }
+        composable<Destination.Home>() {
+            HomeScreen()
+        }
         composable<Destination.Task>() {
-             val taskRepository = TaskRepository()
-            TaskListScreen(taskRepository)
+            val taskRepository = TaskRepository()
+            val taskViewModel = TaskViewModel(taskRepository)
+            TaskListScreen(taskViewModel)
         }
     }
 }
