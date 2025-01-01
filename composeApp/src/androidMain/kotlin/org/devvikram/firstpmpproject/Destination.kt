@@ -11,6 +11,10 @@ sealed class Destination{
     data object Task : Destination()
 
     @Serializable
+    data object Post : Destination()
+
+
+    @Serializable
     data class FavoriteCardDetailScreen(
         val id : String
     ) : Destination()

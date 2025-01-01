@@ -43,11 +43,13 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavHostController
+import org.devvikram.firstpmpproject.Destination
 import org.devvikram.firstpmpproject.TaskViewModel
 import org.devvikram.firstpmpproject.model.Task
 
 @Composable
-fun TaskListScreen(taskViewModel: TaskViewModel) {
+fun TaskListScreen(taskViewModel: TaskViewModel,navHostController: NavHostController) {
     val context = androidx.compose.ui.platform.LocalContext.current
     val tasks by taskViewModel.tasks.collectAsState()
     val newTaskTitle = remember { mutableStateOf("") }
@@ -117,6 +119,17 @@ fun TaskListScreen(taskViewModel: TaskViewModel) {
                     )
                 }
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "Explore Posts",
+                fontSize = 20.sp,
+                color = Color.Black,
+                modifier = Modifier.padding(start = 16.dp).clickable {
+                    navHostController.navigate(Destination.Post)
+                }
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
